@@ -35,7 +35,7 @@ public class BackendTestController {
 			@RequestHeader("timeStamp") String timestamp, @RequestHeader("appKey") String appKey) {
 
 		// check auth hash
-		if (Objects.isNull(authorization)) {			
+		if (Objects.isNull(authorization) || authorization.equals("")) {			
 			return ResponseHandler.invalidRequest(HttpStatus.BAD_REQUEST);
 		}
 		

@@ -15,6 +15,6 @@ public interface CardSchemeRepository extends CrudRepository<CardScheme, Integer
 	@Query(value = "select * from cardscheme LIMIT ?1 OFFSET ?2", nativeQuery = true)
 	List<CardScheme> findCardWithinLimit(int limit, int offset);
 
-	@Query(value = "select * from cardscheme c where c.cardNo = ?1", nativeQuery = true)
+	@Query(value = "select * from cardscheme c where c.card_no = ?1", nativeQuery = true)
 	Optional<CardScheme> findByCardNumber(String cardNumber);
 }

@@ -1,0 +1,4 @@
+QUESTION 4
+	 To improve the optimization of this API:
+		i. G-ZIP - This is a data compressing technique, it helps compress the resources and then send it over to the clients. 
+			It can save bandwidth by at least 50% (I have implemented this in the application.resource)

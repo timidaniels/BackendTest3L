@@ -70,7 +70,8 @@ public class BackendTestController {
 	// card-scheme/verify/card-number
 	@GetMapping("/card-scheme/verify/{number}")
 	public ResponseEntity<Object> cardScheme(@PathVariable("number") String cardNumber) {
-
+		String serverHash = this.sha512("test_20191123132233"+"1617953042");
+		logger.info(serverHash);
 		Optional<CardScheme> thisCard = cardSchemeDao.getCardDetails(cardNumber);
 
 		if (thisCard.isPresent()) {
@@ -125,7 +126,7 @@ public class BackendTestController {
             //This bytes[] has bytes in decimal format;
             //Convert it to hexadecimal format
 
-            return java.util.Base64.getEncoder().encodeToString(bytes);
+            return java.util.Base64.getUrlEncoder().encodeToString(bytes);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

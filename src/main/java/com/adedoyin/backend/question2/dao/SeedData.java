@@ -1,5 +1,7 @@
 package com.adedoyin.backend.question2.dao;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -9,13 +11,15 @@ import com.adedoyin.backend.question2.models.CardScheme;
 
 public class SeedData {
 
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired
 	CardSchemeRepository cardSchemeRepository;
-	
+
 	@EventListener(ApplicationReadyEvent.class)
 	public void saveCardScheme() {
-		System.out.println("App seeding database started");
-		
+		logger.info("App seeding database started");
+
 		String[] banks = { "UBS", "FCMD", "" };
 		String[] schemes = { "visa", "mastercard", "amex" };
 		String[] cards = { "4166676667666746", "4646464646464644", "5136333333333335", "4017340000000003",
@@ -25,6 +29,8 @@ public class SeedData {
 				"4000180000000002" };
 
 		for (int i = 0; i < 20; i++) {
+			logger.info("App seeding database saving started");
+
 			cardSchemeRepository.save(new CardScheme(cards[i], schemes[(int) Math.random() * 3], "debit",
 					banks[(int) Math.random() * 3], 0));
 		}

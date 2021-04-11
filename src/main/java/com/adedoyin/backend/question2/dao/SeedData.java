@@ -1,14 +1,21 @@
 package com.adedoyin.backend.question2.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 
 import com.adedoyin.backend.question2.interfaces.CardSchemeRepository;
 import com.adedoyin.backend.question2.models.CardScheme;
 
 public class SeedData {
+
 	@Autowired
 	CardSchemeRepository cardSchemeRepository;
+	
+	@EventListener(ApplicationReadyEvent.class)
 	public void saveCardScheme() {
+		System.out.println("App seeding database started");
+		
 		String[] banks = { "UBS", "FCMD", "" };
 		String[] schemes = { "visa", "mastercard", "amex" };
 		String[] cards = { "4166676667666746", "4646464646464644", "5136333333333335", "4017340000000003",

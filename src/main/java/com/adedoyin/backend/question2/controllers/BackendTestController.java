@@ -5,9 +5,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +24,6 @@ public class BackendTestController {
 	@Autowired
 	private CardSchemeDao cardSchemeDao;
 
-	//private Logger logger = LoggerFactory.getLogger(this.getClass());
-
 	@GetMapping("/")
 	String sayHello() {
 		return "Hello 3Line! from Adedoyin Daniel";
@@ -40,12 +35,14 @@ public class BackendTestController {
 			@RequestHeader("timeStamp") String timestamp, @RequestHeader("appKey") String appKey) {
 
 		// check auth hash
+		if (Objects.isNull(authorization)) {			
+			return ResponseHandler.invalidRequest(HttpStatus.BAD_REQUEST);
+		}
+		
 		String clientHash = authorization.split(" ")[1];
 		String serverHash = this.sha512(appKey + timestamp);
 
-		if (Objects.isNull(serverHash)) {
-			// throw new InvalidRequestException("Invalid Authorization Header, invalid
-			// Hash");
+		if (Objects.isNull(serverHash)) {			
 			return ResponseHandler.invalidRequest(HttpStatus.BAD_REQUEST);
 		}
 
@@ -59,8 +56,6 @@ public class BackendTestController {
 	// card-scheme/verify/card-number
 	@GetMapping("/card-scheme/verify/{number}")
 	public ResponseEntity<Object> cardScheme(@PathVariable("number") String cardNumber) {
-		//String serverHash = this.sha512("test_20191123132233" + "1617953042");
-		//logger.info(serverHash);
 		Optional<CardScheme> thisCard = cardSchemeDao.getCardDetails(cardNumber);
 
 		if (thisCard.isPresent()) {

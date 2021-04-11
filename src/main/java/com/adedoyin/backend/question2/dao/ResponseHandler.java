@@ -88,4 +88,34 @@ public class ResponseHandler {
 		return new ResponseEntity<Object>(map, status);
 
 	}
+	
+	public static ResponseEntity<Object> validAuthKey(HttpStatus status) {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("Message", "Authorization Successful");
+		map.put("status", status.value());
+
+		return new ResponseEntity<Object>(map, status);
+
+	}
+	
+	public static ResponseEntity<Object> invalidAuthKey(HttpStatus status) {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("Message", "Invalid Authorization Key");
+		map.put("status", status.value());
+
+		return new ResponseEntity<Object>(map, status);
+
+	}
+	
+	public static ResponseEntity<Object> invalidRequest(HttpStatus status) {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("Message", "Invalid Request");
+		map.put("status", status.value());
+
+		return new ResponseEntity<Object>(map, status);
+
+	}
 }

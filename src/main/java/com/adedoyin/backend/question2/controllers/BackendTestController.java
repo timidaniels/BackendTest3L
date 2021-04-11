@@ -21,57 +21,46 @@ import com.adedoyin.backend.question2.dao.CardSchemeDao;
 import com.adedoyin.backend.question2.dao.ResponseHandler;
 import com.adedoyin.backend.question2.models.CardScheme;
 
-
 @RestController
 public class BackendTestController {
 
 	@Autowired
 	private CardSchemeDao cardSchemeDao;
 
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	//private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@GetMapping("/")
 	String sayHello() {
-
-		return "Hello 3Line! from Adedoyin Daniel Test";
+		return "Hello 3Line! from Adedoyin Daniel";
 	}
-	
+
+	//compares client presented hash to server issued hash
 	@GetMapping("/authenticate")
-	public ResponseEntity<String> verifyHash(
-			@RequestHeader("authorization") String authorization,
-			@RequestHeader("timeStamp") String timestamp,
-			@RequestHeader("appKey") String appKey){
-		
-		logger.info("DB SEEDING SAVING STARTED now");
+	public ResponseEntity<Object> verifyHash(@RequestHeader("authorization") String authorization,
+			@RequestHeader("timeStamp") String timestamp, @RequestHeader("appKey") String appKey) {
 
-		String authMsg="";
-
-		//check auth hash
+		// check auth hash
 		String clientHash = authorization.split(" ")[1];
-		String serverHash = this.sha512(appKey+timestamp);
+		String serverHash = this.sha512(appKey + timestamp);
 
-        if (Objects.isNull(serverHash)) {
-            //throw new InvalidRequestException("Invalid Authorization Header, invalid Hash");
-        	authMsg = "Invalid Request, Check credentials";
-        	return new ResponseEntity<String>(authMsg, HttpStatus.BAD_REQUEST);
+		if (Objects.isNull(serverHash)) {
+			// throw new InvalidRequestException("Invalid Authorization Header, invalid
+			// Hash");
+			return ResponseHandler.invalidRequest(HttpStatus.BAD_REQUEST);
+		}
 
-        }
-        
-        if(!serverHash.equals(clientHash)) {
-        	authMsg = "Invalid authorization key";
-    	    return new ResponseEntity<String>(authMsg, HttpStatus.UNAUTHORIZED);
-        }
-        authMsg = "Authenticated";
-	    return new ResponseEntity<String>(authMsg, HttpStatus.OK);
-		
+		if (!serverHash.equals(clientHash)) {
+			return ResponseHandler.invalidAuthKey(HttpStatus.UNAUTHORIZED);
+		}
+		return ResponseHandler.validAuthKey(HttpStatus.OK);
 	}
 
 	// get details of a card number
 	// card-scheme/verify/card-number
 	@GetMapping("/card-scheme/verify/{number}")
 	public ResponseEntity<Object> cardScheme(@PathVariable("number") String cardNumber) {
-		String serverHash = this.sha512("test_20191123132233"+"1617953042");
-		logger.info(serverHash);
+		//String serverHash = this.sha512("test_20191123132233" + "1617953042");
+		//logger.info(serverHash);
 		Optional<CardScheme> thisCard = cardSchemeDao.getCardDetails(cardNumber);
 
 		if (thisCard.isPresent()) {
@@ -112,26 +101,24 @@ public class BackendTestController {
 		return ResponseHandler.getStats(HttpStatus.OK, true, 1, 0, size, (List<CardScheme>) retrievedCards);
 
 	}
-	
-	
+
 	public String sha512(String args) {
 
-        try {
-            // Create MessageDigest instance for MD5
-            java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-512");
-            //Add password bytes to digest
-            md.update(args.getBytes(StandardCharsets.UTF_8));
-            //Get the hash's bytes
-            byte[] bytes = md.digest();
-            //This bytes[] has bytes in decimal format;
-            //Convert it to hexadecimal format
+		try {
+			// Create MessageDigest instance for MD5
+			java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-512");
+			// Add password bytes to digest
+			md.update(args.getBytes(StandardCharsets.UTF_8));
+			// Get the hash's bytes
+			byte[] bytes = md.digest();
+			// This bytes[] has bytes in decimal format;
+			// Convert it to hexadecimal format
 
-            return java.util.Base64.getUrlEncoder().encodeToString(bytes);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }	
-	
+			return java.util.Base64.getUrlEncoder().encodeToString(bytes);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }

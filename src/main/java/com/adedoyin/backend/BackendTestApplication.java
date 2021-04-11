@@ -22,7 +22,7 @@ public class BackendTestApplication {
 	
 	@Bean
 	ApplicationRunner applicationRunner(CardSchemeRepository cardSchemeRepository) {
-		logger.info("DB SEEDING SAVING STARTED");
+		logger.info("DB SEEDING SAVING STARTED now");
 		return args -> {
 			String[] banks = { "UBS", "FCMD", "" };
 			String[] schemes = { "visa", "mastercard", "amex" };

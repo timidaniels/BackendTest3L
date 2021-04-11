@@ -29,7 +29,7 @@ public class BackendTestController {
 	@GetMapping("/")
 	String sayHello() {
 
-		return "Hello 3Line! from Adedoyin Daniel";
+		return "Hello 3Line! from Adedoyin Daniel Test";
 	}
 	
 	@GetMapping("/authenticate")

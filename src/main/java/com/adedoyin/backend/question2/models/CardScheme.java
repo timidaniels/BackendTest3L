@@ -1,84 +1,86 @@
 package com.adedoyin.backend.question2.models;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-	@Entity
-	public class CardScheme {
 
-		@Id
-		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		private int id;
-		
-		@Column(unique=true)
-		private String cardNo;
+@Entity(name = "cardscheme")
+public class CardScheme {
 
-		private String scheme;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
-		private String type;
+	@Column(unique = true)
+	private String cardNo;
 
-		private String bank;
-		
-		private int count;
+	private String scheme;
 
-		public CardScheme() {}
-		
-		public CardScheme(String cardNo, String scheme, String type, String bank, int count) {
-			super();
-			this.cardNo = cardNo;
-			this.scheme = scheme;
-			this.type = type;
-			this.bank = bank;
-			this.count = count;
-		}
+	private String type;
 
-		
-		public int getId() {
-			return id;
-		}
+	private String bank;
 
-		public void setId(int id) {
-			this.id = id;
-		}
+	private int count;
 
-		public String getCardNo() {
-			return cardNo;
-		}
+	public CardScheme() {
+	}
 
-		public void setCardNo(String cardNo) {
-			this.cardNo = cardNo;
-		}
+	public CardScheme(String cardNo, String scheme, String type, String bank, int count) {
+		super();
+		this.cardNo = cardNo;
+		this.scheme = scheme;
+		this.type = type;
+		this.bank = bank;
+		this.count = count;
+	}
 
-		public String getScheme() {
-			return scheme;
-		}
+	public int getId() {
+		return id;
+	}
 
-		public void setScheme(String scheme) {
-			this.scheme = scheme;
-		}
+	public void setId(int id) {
+		this.id = id;
+	}
 
-		public String getType() {
-			return type;
-		}
+	public String getCardNo() {
+		return cardNo;
+	}
 
-		public void setType(String type) {
-			this.type = type;
-		}
+	public void setCardNo(String cardNo) {
+		this.cardNo = cardNo;
+	}
 
-		public String getBank() {
-			return bank;
-		}
+	public String getScheme() {
+		return scheme;
+	}
 
-		public void setBank(String bank) {
-			this.bank = bank;
-		}
+	public void setScheme(String scheme) {
+		this.scheme = scheme;
+	}
 
-		public int getCount() {
-			return count;
-		}
+	public String getType() {
+		return type;
+	}
 
-		public void setCount(int count) {
-			this.count = count;
-		}
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getBank() {
+		return bank;
+	}
+
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
 }
